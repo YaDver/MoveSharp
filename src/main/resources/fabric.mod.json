@@ -7,7 +7,7 @@
   "authors": ["YaDver"],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/move-sharp/icon.png",
+  "icon": "assets/move-sharp/logo.png",
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [
