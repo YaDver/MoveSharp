@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
-public abstract class playerDataTracker extends LivingEntity {
-    protected playerDataTracker(EntityType<? extends LivingEntity> entityType, World world) {
+public abstract class playerDataTrackerServer extends LivingEntity {
+    protected playerDataTrackerServer(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
     @Inject(require = 1, method = "initDataTracker", at = @At("HEAD"))
