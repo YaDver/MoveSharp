@@ -1,7 +1,6 @@
 package com.yadver.moveSharp.mixin;
 
 import com.yadver.moveSharp.MoveSharp;
-import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,17 +11,17 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
-public abstract class playerCrawlingServer extends LivingEntity {
-    protected playerCrawlingServer(EntityType<? extends LivingEntity> entityType, World world) {
+public abstract class playerClimbing extends LivingEntity {
+    protected playerClimbing(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    @Inject(method = "updatePose", at = @At("TAIL"))
-    private void updatePose(CallbackInfo ci) {
-        if (this.wouldPoseNotCollide(EntityPose.SWIMMING)
-                && this.getDataTracker().get(MoveSharp.IS_CRAWLING)
-        ) {
-            this.setPose(EntityPose.SWIMMING);
+    @Inject(method = "tickMovement", at = @At("TAIL"))
+    private void lockXZ(CallbackInfo ci) {
+        if (this.getDataTracker().get(MoveSharp.IS_CLIMBING)) {
+//            this.setMovementSpeed(0f);
+            this.setVelocity((double)0.0F, this.getVelocity().y, (double)0.0F);
+            this.velocityDirty = true;
         }
     }
 }

@@ -8,6 +8,7 @@ import net.minecraft.util.Identifier;
 public class ModNetwork {
     private static final Identifier CHANNEL_slide = new Identifier(MoveSharpClient.MOD_ID, "slide");
     private static final Identifier CHANNEL_crawl = new Identifier(MoveSharpClient.MOD_ID, "crawl");
+    private static final Identifier CHANNEL_climb = new Identifier(MoveSharpClient.MOD_ID, "climb");
 
     public static void playerSliding(boolean isSliding) {
         PacketByteBuf buf = PacketByteBufs.create();
@@ -18,5 +19,10 @@ public class ModNetwork {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeBoolean(isCrawling);
         ClientPlayNetworking.send(CHANNEL_crawl, buf);
+    }
+    public static void playerClimbing(boolean isClimbing) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBoolean(isClimbing);
+        ClientPlayNetworking.send(CHANNEL_climb, buf);
     }
 }

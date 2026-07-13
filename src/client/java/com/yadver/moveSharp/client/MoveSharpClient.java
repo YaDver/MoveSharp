@@ -1,25 +1,34 @@
 package com.yadver.moveSharp.client;
 
+import com.yadver.moveSharp.client.Movement.PlayerSharp;
 import com.yadver.moveSharp.client.Utils.SmoothAcceleration;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.EntityPose;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.BlockView;
 
-import java.util.logging.Logger;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import static com.yadver.moveSharp.client.Utils.CheckBlock.*;
 
 public class MoveSharpClient implements ClientModInitializer {
     public static final String MOD_ID = "move-sharp";
-    public static Logger logger = Logger.getLogger(MOD_ID);
+
+    public PlayerSharp playerSharp;
 
     static boolean isClimbing = false;
     static boolean isSliding = false;
@@ -28,7 +37,6 @@ public class MoveSharpClient implements ClientModInitializer {
     static boolean canSliding = true;
 
     private static double startPos;
-    SmoothAcceleration smoothClimb;
     SmoothAcceleration smoothSlide;
 
     static double climbingSpeed = 0.15;
@@ -179,36 +187,82 @@ public class MoveSharpClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        WorldRenderEvents.AFTER_ENTITIES.register(context -> {
+            if (playerSharp != null) {
+                Vec3d camPos = context.camera().getPos();
+                List<Map.Entry<Box, BlockPos>> wall = playerSharp.voxelWall.voxelWall;
+                for (Map.Entry<Box, BlockPos> boxBlockPosEntry : wall) {
+                    WorldRenderer.drawBox(
+                            context.matrixStack(),
+                            Objects.requireNonNull(context.consumers()).getBuffer(RenderLayer.getLines()),
+                            boxBlockPosEntry.getKey().offset(
+                                    boxBlockPosEntry.getValue().getX() - camPos.x,
+                                    boxBlockPosEntry.getValue().getY() - camPos.y,
+                                    boxBlockPosEntry.getValue().getZ() - camPos.z
+                            ),
+                            0.25f, 0f, 1f, 0.5f
+                    );
+                }
+                List<Box> ledges = playerSharp.voxelWall.voxelLedge;
+                for (Box ledge : ledges) {
+                    WorldRenderer.drawBox(
+                            context.matrixStack(),
+                            Objects.requireNonNull(context.consumers()).getBuffer(RenderLayer.getLines()),
+
+                            ledge.offset(
+                                    -camPos.x,
+                                    -camPos.y,
+                                    -camPos.z
+                            ),
+                            1f, 0f, 0.25f, 1f
+                    );
+                }
+            }
+        });
+
         ClientTickEvents.END_CLIENT_TICK.register(Client -> {
+            if (playerSharp == null && Client.player != null) {
+                playerSharp = new PlayerSharp(Client.player);
+            }
             ClientPlayerEntity player = Client.player;
             ClientWorld world = Client.world;
 
             if (player != null && world != null) {
                 Vec3d vel = player.getVelocity();
 
+                playerSharp.update(
+                        Client.options.sprintKey.isPressed(),
+                        Client.options.sneakKey.isPressed()
+                );
+
+//                if (playerSharp.isClimbing()) {
+//                    Client.player.move
+//                }
+
                 if (Client.options.sprintKey.isPressed()) {
 
                     //  Climbing
-                    if (canClimbing
-                            && !isSliding
-                            && !player.isOnGround()
-                            && freeBelow(world, player.getPos())
-                            && isOnWall(world, player, true, Client.options.sneakKey.isPressed())
-                        ) {
-                        if (!isClimbing){
-                            if (vel.y > 0) {
-                                smoothClimb = new SmoothAcceleration(vel.y, climbingSpeed/2 , 0.1);
-                            } else smoothClimb = new SmoothAcceleration(0, climbingSpeed, 0.1);
-                        }
-                        isClimbing = isClimbing || !isCrawling;
-                        if (isClimbing) player.setVelocity(vel.x/2, smoothClimb.update() , vel.z/2);
-                    } else {
-                        if (isClimbing) {
-                            canClimbing = false;
-                            smoothClimb.restore();
-                            isClimbing = false;
-                        }
-                    }
+//                    if (canClimbing
+//                            && !playerSharp.isSliding()
+//                            && !player.isOnGround()
+//                            && playerSharp.freeBelow()
+//                            && isOnWall(world, player, true, Client.options.sneakKey.isPressed())
+//                        ) {
+//                        if (!playerSharp.isClimbing()){
+//                            playerSharp.setSmoothClimb((vel.y > 0) ?
+//                                    new SmoothAcceleration(vel.y, climbingSpeed/2 , 0.1) :
+//                                    new SmoothAcceleration(0, climbingSpeed, 0.1));
+//                        }
+//                        playerSharp.setClimbing(isClimbing || !isCrawling);
+//                        isClimbing = isClimbing || !isCrawling;
+//                        playerSharp.Climb();
+//                    } else {
+//                        if (isClimbing) {
+//                            canClimbing = false;
+//                            isClimbing = false;
+//                            playerSharp.setClimbing(false);
+//                        }
+//                    }
 
                     //  Crawling
                     if (Client.options.sneakKey.isPressed()
@@ -217,7 +271,7 @@ public class MoveSharpClient implements ClientModInitializer {
                             && player.isOnGround()
                     ) isCrawling = true;
                     if (player.isCrawling()) isCrawling = true;
-                } else isCrawling = isCrawling && !freeAbove(world, player.getPos());
+                } else isCrawling = false;
 
                 //  Sliding
                 if (Client.options.sneakKey.isPressed()
