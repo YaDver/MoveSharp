@@ -4,15 +4,16 @@ import dev.architectury.platform.forge.EventBuses;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import com.YaDver.MoveSharp.ExampleMod;
+import com.YaDver.MoveSharp.MoveSharp;
 
-@Mod(ExampleMod.MOD_ID)
+@Mod(MoveSharp.MOD_ID)
 public final class ExampleModForge {
+    @SuppressWarnings("removal")
     public ExampleModForge() {
         // Submit our event bus to let Architectury API register our content on the right time.
-        EventBuses.registerModEventBus(ExampleMod.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
+        EventBuses.registerModEventBus(MoveSharp.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
 
         // Run our common setup.
-        ExampleMod.init();
+        MoveSharp.init();
     }
 }
