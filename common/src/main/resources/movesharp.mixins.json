@@ -1,11 +1,13 @@
 {
   "required": true,
-  "package": "com.YaDver.MoveSharp.mixin",
+  "package": "com.yadver.movesharp.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
   ],
   "mixins": [
+    "playerCrawlingPose",
+    "injectPlayerSharp"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -3,23 +3,23 @@
   "id": "movesharp",
   "version": "${version}",
   "name": "MoveSharp",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "",
   "authors": [
-    "Me!"
+    "YaDver"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
     "sources": "https://github.com/FabricMC/fabric-example-mod"
   },
-  "license": "CC0-1.0",
-  "icon": "assets/movesharp/icon.png",
+  "license": "MIT",
+  "icon": "assets/movesharp/logo.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.YaDver.MoveSharp.fabric.ExampleModFabric"
+      "com.yadver.movesharp.fabric.MoveSharpFabric"
     ],
     "client": [
-      "com.YaDver.MoveSharp.fabric.client.ExampleModFabricClient"
+      "com.yadver.movesharp.fabric.client.MoveSharpFabricClient"
     ]
   },
   "mixins": [
