@@ -82,7 +82,7 @@ public class PlayerSharp {
     public boolean isFrontCollide() {
         Vec3 p_look = getNormalPlayerRotationVector();
         AABB box = player.getBoundingBox();
-        return !level.noCollision(box.move(p_look.x / 16, 0, p_look.z / 16));
+        return !level.noCollision(box.move(p_look.x / 8, 0, p_look.z / 8));
     }
 
     public boolean isAboveCollide() {

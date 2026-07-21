@@ -17,6 +17,7 @@ public class SmoothAcceleration {
 
     public void restore() {
         this.currentSpeed = this.initialSpeed;
+        this.accelerating = true;
     }
 
     public double getCurrentSpeed() {
