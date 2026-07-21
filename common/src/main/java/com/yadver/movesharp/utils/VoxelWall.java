@@ -48,11 +48,12 @@ public class VoxelWall {
                 blockPos.getZ() - p_pos.z - 0.31 * p_look.z);
 
         //  Сканирование 4-х блоков от уровня ног игрока и выше
-        for (int b = -1; b < 3; b++) {
+        for (int b = -4; b < 3; b++) {
             BlockState blockState = level.getBlockState(blockPos.offset(0, b, 0));
             VoxelShape collisionShape = blockState.getCollisionShape(level, blockPos.offset(0, b, 0));
 
-            if (!collisionShape.isEmpty() && (b != -1 || collisionShape.max(Direction.Axis.Y) > 1)) {
+            if (!collisionShape.isEmpty()) {
+//            if (!collisionShape.isEmpty() && (b != -1 || collisionShape.max(Direction.Axis.Y) > 1)) {
                 List<AABB> boxes = collisionShape.toAabbs();
                 for (AABB box : boxes) {
                     //  Поиск AABB в зависимости от направления взгляда игрока.

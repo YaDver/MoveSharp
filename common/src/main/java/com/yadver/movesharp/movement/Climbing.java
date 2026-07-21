@@ -5,6 +5,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
+import static com.mojang.text2speech.Narrator.LOGGER;
+
 //  TODO: Добавить комментарии. А то хули, опять забью на мод и вот гадай, что за велосипед я тут изобрёл.
 public class Climbing {
     private final PlayerSharp context;
@@ -13,7 +15,6 @@ public class Climbing {
     private boolean waitTickForCrawl = false;
     private AABB target = null;
     private List<AABB> ledges = null;
-    public boolean needCrouching = false;
     public Climbing(PlayerSharp context) {
         this.context = context;
     }
@@ -33,12 +34,15 @@ public class Climbing {
                     context.voxelWall.searchLedge();
                     climbUpdate();
                 }
-            } else restart();
-        }
+            }
+        } else restart();
+//        LOGGER.info("Can {} | FreeBelow {} | FrontCollide {} | SprintKey {} | NullTarget {}",
+//                canClimbing, context.freeBelow(), context.isFrontCollide(), context.getSprinting(), target == null
+//        );
     }
 
     private void climbUpdate() {
-        context.slide_manager.setCanSliding(false);
+//        context.slide_manager.setCanSliding(false);
         if (context.voxelWall.checkForUpdate(context.getLevel())) {
             context.voxelWall.scanWall();
             context.voxelWall.searchLedge();
@@ -57,9 +61,10 @@ public class Climbing {
                     }
                 }
             } else target = ledges.get(ledges.size() - 1);
-            if (target.minY + 0.15 >= context.getPlayer().position().y) {
+            if (target.minY >= context.getPlayer().position().y) {
                 context.getPlayer().setDeltaMovement(0, 0.15, 0);
-            } else {
+//            } else {
+            } else if (target.minY + 0.3 > context.getPlayer().position().y) {
                 if (!context.getLevel().noCollision(target.setMaxY(target.minY + 1.9))) {
                     context.crawl_manager.forceCrawling(true);
                     waitTickForCrawl = true;
@@ -72,17 +77,17 @@ public class Climbing {
     private void climbEnd() {
         Vec3 p_look = context.getNormalPlayerRotationVector();
         double endStepForce = 0.05;
-        context.getPlayer().setDeltaMovement(endStepForce * p_look.x, 0, endStepForce * p_look.z);
+        context.getPlayer().setDeltaMovement(endStepForce * p_look.x, context.getPlayer().getDeltaMovement().y, endStepForce * p_look.z);
 
-        if (waitTickForCrawl) {
-            waitTickForCrawl = false;
-        } else restart();
+        if (!waitTickForCrawl) {
+            canClimbing = false;
+            restart();
+        } else waitTickForCrawl = false;
     }
 
     private void restart() {
         context.crawl_manager.forceCrawling(false);
-        canClimbing = false;
+        waitTickForCrawl = false;
         climbingRightNow = false;
-        needCrouching = false;
     }
 }
