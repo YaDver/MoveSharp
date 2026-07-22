@@ -13,6 +13,9 @@ description = '''
 '''
 #logoFile = ""
 
+[[mixins]]
+config = "movesharp.mixins.json"
+
 [[dependencies.movesharp]]
 modId = "neoforge"
 type = "required"

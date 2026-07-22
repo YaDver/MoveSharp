@@ -1,5 +1,7 @@
 package com.yadver.movesharp;
 
+import com.yadver.movesharp.network.ModNetwork;
+
 public final class MoveSharp {
     public static final String MOD_ID = "movesharp";
 

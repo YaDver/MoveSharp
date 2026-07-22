@@ -8,6 +8,7 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -15,6 +16,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 //  TODO: Добавить комментарии. А то хули, опять забью на мод и вот гадай, что за велосипед я тут изобрёл.
 @Mixin(Player.class)
 public abstract class playerCrawlingPose extends LivingEntity {
+    @Shadow
+    protected abstract boolean canPlayerFitWithinBlocksAndEntitiesWhen(Pose pose);
+
     protected playerCrawlingPose(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
     }
@@ -23,7 +27,7 @@ public abstract class playerCrawlingPose extends LivingEntity {
     private void updatePlayerPoseHEAD(CallbackInfo ci) {
         PlayerSharpAccess access = (PlayerSharpAccess) this;
         PlayerSharp playerSharp = access.moveSharp$getWrapper();
-        if (this.canEnterPose(Pose.SWIMMING)
+        if (this.canPlayerFitWithinBlocksAndEntitiesWhen(Pose.SWIMMING)
                 && playerSharp.crawl_manager.canCrawling()
         ) {
             this.setPose(Pose.SWIMMING);

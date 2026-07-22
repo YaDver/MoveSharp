@@ -1,6 +1,6 @@
 package com.yadver.movesharp.movement;
 
-import com.yadver.movesharp.ModNetwork;
+import com.yadver.movesharp.network.ModNetwork;
 import com.yadver.movesharp.utils.VoxelWall;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
