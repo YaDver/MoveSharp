@@ -1,32 +1,51 @@
-# [Page on Modrinth](https://modrinth.com/project/movesharp)
 
-# MoveSharp - Enhanced Movement in Minecraft
-
-## About the Mod
-
-MoveSharp expands the basic movement mechanics in Minecraft by adding new ways to interact with vertical surfaces. The mod is inspired by the concepts behind programming languages C++ and C#, aiming to improve and complement existing mods that offer similar functionalities. This inspiration is reflected in the mod's name, MoveSharp (or Move#). MoveSharp adds additional conditions, limitations, and details for a more realistic and engaging gameplay experience.
-
-## Mod Mechanics
-
-*   **Climbing:** Hold down the sprint button (Ctrl by default) and jump towards a wall up to 4 blocks high to climb it.
-*   **Sliding:** While falling, press against a wall and hold down the sneak button (Shift by default) to grab onto the wall and reduce your fall speed. This helps minimize fall damage!
-*   **Crawling:** Hold down the sprint button (Ctrl by default) and press the sneak button (Shift by default) while on the ground to crouch and crawl through a 1-block high tunnel.
-*   **Automatic Crawl Mode:** When a player climbs a wall where there is no space underneath their character (1 block high instead of two), the character will automatically switch to crawl mode to climb through a narrow opening in the wall.
-*   **Utilizing Existing Keybinds:** The mod does not create new keybindings. It utilizes the sprint and sneak keys from the standard Minecraft control settings.
-
-## Limitations
-
-*   **Fall Height:** You cannot grab onto a wall for sliding or climbing if you are falling more than 10 blocks high.
-*   **Repeated Use:**  You cannot reuse these mechanics until you have landed.
-
-## Minecraft Version Support
-
-*   1.20.1 (Fabric)
-
-## Future Plans
-
-* **Porting to Other Fabric Versions**: Initially, the mod will be ported to newer versions, and then I'll work on porting it to older ones as well.
+# [MoveSharp](https://modrinth.com/project/movesharp) - Enhanced Movement in Minecraft
 
 ---
 
-**Stay tuned for updates and report any bugs!**
+## About the Mod
+
+MoveSharp расширяет возможности стандартных механик передвижения в Minecraft благодаря новым взаимодействиям с вертикальными поверхностями.
+Когда я ещё играл на весрии Minecraft 1.5.2, я познакомился с модом [SmartMoving](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1274224-smart-moving).
+Я влюбился в эту идею передвиженя. Но со временем я переходил на более новые версии Minecraft и искал моды, которые подарили бы мне похожый опыт, и встретил мод [Move Plus](https://github.com/Corosauce/MovePlus).
+Но ничто не вечно. Я перехожу на Froge 1.20.1 и не могу найти ничего, что смогло бы дать мне теже эмоции.
+Будучи совсем неопытен, я решил перенести [Move Plus](https://github.com/Corosauce/MovePlus) на версию Forge 1.20.1 для личного использования.
+А когда начал местами переписывать код, добавлять и углублять механики, я понял, что вполне способен написать мод сам с нуля.
+
+Вдохновляясь идеей языков C++ и C#, я решил назвать свой мод MoveSharp, показывая, что процесс разработки начался благодаря моду [Move Plus](https://github.com/Corosauce/MovePlus),
+но за любовь к лазанию и за детство огромное спасибо [SmartMoving](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1274224-smart-moving).
+
+## Mod Mechanics
+
+*   **Climbing:** Зажав клавишу спринта (Ctrl по-умолчанию) и прыгнув на стену, в сможете забраться на неё, если на ней есть место для игрока в пределах 4 блоков.
+Изначально персонаж залезает на самую верхную точку. Но если по пути есть пустое пространство в один блок, вы сможете пролесть в него, если перед этим местом вы зажмёте кнопку приседа (Shift по-умолчанию).
+А также, если в процессе подъёма для игрока не будет хватать места, чтобы стоять в полный рост, персонаж автоматически перейдёт в режим ползания (о нём далее).
+*   **Crawling:** Зажав кнопку спринта (Ctrl по-умолчанию) и один раз нажать кнопку приседа (Shift по-умолчанию), находясь на земле, ваш персонаж перейдёт в режим ползания.
+Это позволит вам поместиться в пространство высотой всего в один блок. На самом деле в 0,6 от блока, так как персонаж в ширину 0,6 в ванильном Minecraft.
+Кстати, вам не обязательно держать кнопку спринта, если над вами нет места чтобы встать.
+Но если вы хотите сохранить положение лёжа, когда вылезете из тунеля, зажмите спринт снова, тогда вы продолжите чесать пузико.
+*   **Sliding:** Если вы падаете вдоль стены, то вы можете зажать кнопку приседа (Shift по-умолчанию), чтобы зацепиться за стену и уменьшить скорость падения.
+Чем дольше вы скользите по стене, тем меньше урона вы получитите.
+Если вы рискнёте и сможете правильно расчитать время, то даже падение с высоты 30 блоков не нанесёт вам урона.
+Но знайте, если вы падаете уже больше 10 блоков вниз, а вы не начали сбрасывать скорость, то ничего вам уже не поможет.
+*   **Использование стандартных клавиш:** Мод не создаёт новые комбинации клавиш. Вам не нужно заходить в настройки и менять кнопки для механик мода.
+Используются те клавиши приседа и спринта, которые установлены у вас в настройках самого Minecraft для приседа и спринта соответственно.
+Если у вас возникает вопрос, почему именно спринт отвечает за карабканье, то ответ очень простой: "Вы бежите и прыгаете на стену, что вам ещё делать? Трансформироваться в Автобота?";
+а присед для скольжэения по стене: "Вы приседаете, чтобы не соскочить с края блока. А что ещё присед может делать, когда вы падаете вдоль стены?"
+* **Повторное использование:** Чтобы вы могли снова начать крарбкаться на стену или скользить с неё, вам придётся коснуться земли ногами. Хотя можете и лицом, я не запрещаю.
+## Minecraft Version Support
+
+|        | Forge  |   Fabric   |  NeoForge  |
+|:------:|:------:|:----------:|:----------:|
+| 1.20.1 | **Да** |   **Да**   |            |    
+| 1.21.1 |        |   **Да**   |   **Да**   |
+
+Перенос на более новые версии — планирутеся.
+
+## Future Plans
+
+* **Исправление и доработка:** Сейчас этот мод тестировал только я. Поэтому, если вы столкнётесь с багом в этом моде, обязательно пишите об этом на [GitHub Issues](https://github.com/YaDver/MoveSharp/issues) или на [сервер в дискорде](https://discord.gg/NZbYghsPPv).
+Вполне возможно, что мод несовместим с другими модами, что я проверить тольком ещё не успел.
+* **Улучшение совместимости:** В моде Create штуковины являются не блоками, а существами, из-за чего мои механики просто не видят эти блоки.
+Это также касается и физических структур от модов Valkyrien Skies и Sable. Ничего не обещаю, но я хочу попробовать научить свой мод видеть блоки из этих структур.
+А для этого придётся копаться в чужом коде, хотя я только начал понимать базу Minecraft (на самом деле, я ничего не понял).
