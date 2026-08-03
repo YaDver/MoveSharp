@@ -15,7 +15,7 @@ or
 [CurseForge](https://www.curseforge.com/minecraft/mc-mods/movesharp)
 
 ## Demo-video on YouTube
-[<img src="https://img.youtube.com/vi/ne2ic3Fkh0M/hqdefault.jpg" width="600" height="300"
+[<img src="https://img.youtube.com/vi/ne2ic3Fkh0M/hqdefault.jpg" width="480" height="360"
 />](https://www.youtube.com/embed/ne2ic3Fkh0M)
 
 ---
