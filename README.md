@@ -1,5 +1,22 @@
 
-# [MoveSharp](https://modrinth.com/project/movesharp) - Enhanced Movement in Minecraft
+# MoveSharp - Enhanced Movement in Minecraft
+
+## Minecraft Version Support
+
+|        | Forge  |   Fabric   |  NeoForge  |
+|:------:|:------:|:----------:|:----------:|
+| 1.20.1 | **Да** |   **Да**   |            |    
+| 1.21.1 |        |   **Да**   |   **Да**   |
+
+## Download jar files
+
+[Modrinth](https://modrinth.com/project/movesharp)
+or
+[CurseForge](https://www.curseforge.com/minecraft/mc-mods/movesharp)
+
+## Demo-video on YouTube
+[<img src="https://img.youtube.com/vi/ne2ic3Fkh0M/hqdefault.jpg" width="600" height="300"
+/>](https://www.youtube.com/embed/ne2ic3Fkh0M)
 
 ---
 
@@ -33,12 +50,6 @@ MoveSharp расширяет возможности стандартных ме�
 Если у вас возникает вопрос, почему именно спринт отвечает за карабканье, то ответ очень простой: "Вы бежите и прыгаете на стену, что вам ещё делать? Трансформироваться в Автобота?";
 а присед для скольжэения по стене: "Вы приседаете, чтобы не соскочить с края блока. А что ещё присед может делать, когда вы падаете вдоль стены?"
 * **Повторное использование:** Чтобы вы могли снова начать крарбкаться на стену или скользить с неё, вам придётся коснуться земли ногами. Хотя можете и лицом, я не запрещаю.
-## Minecraft Version Support
-
-|        | Forge  |   Fabric   |  NeoForge  |
-|:------:|:------:|:----------:|:----------:|
-| 1.20.1 | **Да** |   **Да**   |            |    
-| 1.21.1 |        |   **Да**   |   **Да**   |
 
 Перенос на более новые версии — планирутеся.
 
